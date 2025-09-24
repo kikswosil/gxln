@@ -33,7 +33,6 @@ int main(int argc, char* argv[]) {
 
 void parseArgs(int argc, char* argv[], std::string& inputFileName, std::string& outputFileName) {
     for (int i = 1; i < argc; i++) {
-        std::cout << argv[i] << std::endl;
         if(std::string(argv[i]) == "-i" && i + 1 < argc) {
             inputFileName = argv[i + 1];
         } 
@@ -43,8 +42,7 @@ void parseArgs(int argc, char* argv[], std::string& inputFileName, std::string& 
     }
 }
 
-void formatNumbers(std::ifstream& inputFile, std::function<std::string(const std::string)> formatFunc) {
-    std::cout << "formatting numbers..." << std::endl;
+void formatNumbers(std::ifstream& inputFile, gxln_conv::converter formatFunc) {
     std::string line;
     while (std::getline(inputFile, line)) {
         std::cout << formatFunc(line) << std::endl;

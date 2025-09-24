@@ -2,10 +2,11 @@
 #include <fstream>
 #include <functional>
 #include <regex>
+#include "gxln/converters.hpp"
 
 void parseArgs(int argc, char* argv[], std::string& inputFileName, std::string& outputFileName);
 void formatNumbers(std::ifstream& inputFile, std::function<std::string(const std::string)> formatFunc);
-std::string xlnToGcodeFormat(std::string line);
+// std::string xlnToGcodeFormat(std::string line);
 
 void readfile(std::string filename, std::function<void(std::ifstream&, std::function<std::string(const std::string)>)> callback) {
     std::ifstream file(filename);
@@ -66,8 +67,8 @@ void formatNumbers(std::ifstream& inputFile, std::function<std::string(const std
     }
 }
 
-std::string xlnToGcodeFormat(std::string line) {
-    std::regex find("^X(\\d+)(\\d\\d)Y(\\d+)(\\d\\d)");
-    std::string replace = "G1 X$1.$2Y$3.$4Z-2.00";
-    return std::regex_replace(line, find, replace);
-}
+// std::string xlnToGcodeFormat(std::string line) {
+//     std::regex find("^X(\\d+)(\\d\\d)Y(\\d+)(\\d\\d)");
+//     std::string replace = "G1 X$1.$2Y$3.$4Z-2.00";
+//     return std::regex_replace(line, find, replace);
+// }

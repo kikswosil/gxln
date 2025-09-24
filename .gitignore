@@ -39,3 +39,6 @@ Makefile
 # Backup files
 *~
 src/main.cpp
+
+# files used for testing
+*.xln

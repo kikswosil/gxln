@@ -42,3 +42,4 @@ src/main.cpp
 
 # files used for testing
 *.xln
+*.gcode

@@ -1,34 +1,57 @@
 #include "cli.hpp"
 #include <iostream>
 
-void CLI::parseArgs(int argc, char* argv[], std::string& intputFileName, std::string& outputFileName) {
+void CLI::parseArgs(int argc, char* argv[], std::string* intputFileName, std::string* outputFileName) {
     for (int i = 1; i < argc; i++) {
         if(std::string(argv[i]) == "-i" && i + 1 < argc) {
-            intputFileName = argv[i + 1];
+            *intputFileName = argv[i + 1];
         } 
         else if(std::string(argv[i]) == "-o" && i + 1 < argc) {
-            outputFileName = argv[i + 1];
+            *outputFileName = argv[i + 1];
         }
     }
 }
 
-void CLI::formatNumbers(std::ifstream& inputFile, gxln_conv::converter formatFunc) {
+std::string CLI::formatNumbers(std::ifstream& inputFile, gxln_conv::converter formatFunc) {
+    if(!inputFile.is_open()) {
+        std::cerr << "Input file is not open!" << std::endl;
+        return "";
+    }
+    std::string result = "";
     std::string line;
     while (std::getline(inputFile, line)) {
-        std::cout << formatFunc(line) << std::endl;
+        result.append(formatFunc(line)).append("\n");
     }
+    return result;
+}
+
+std::ifstream CLI::openFile(const std::string& fileName) {
+    std::ifstream inputFile(fileName);
+    if (!inputFile.is_open()) {
+        std::cerr << "Error opening input file!" << std::endl;
+    }
+    return inputFile;
+}
+
+void CLI::saveFile(const std::string& fileName, const std::string& content) {
+    std::ofstream outputFile(fileName);
+    if (!outputFile.is_open()) {
+        std::cerr << "Error opening output file!" << std::endl;
+        return;
+    }
+    outputFile << content;
+    outputFile.close();
+}
+
+void CLI::fileIsolator(const std::string& inputFileName, const std::string& outputFileName) {
+    std::ifstream inputFile = this->openFile(inputFileName);
+    std::string formatted = this->formatNumbers(inputFile, gxln_conv::xlnToGcodeFormat);
+    this->saveFile(outputFileName, formatted);
 }
 
 void CLI::run(int argc, char* argv[]) {
     std::string inputFileName = "";
     std::string outputFileName = "";
-    this->parseArgs(argc, argv, inputFileName, outputFileName);
-
-    std::ifstream inputFile(inputFileName);
-
-    if (!inputFile.is_open()) {
-        std::cerr << "Error opening files!" << std::endl;
-        return;
-    }
-    this->formatNumbers(inputFile, gxln_conv::xlnToGcodeFormat);
+    this->parseArgs(argc, argv, &inputFileName, &outputFileName);
+    this->fileIsolator(inputFileName, outputFileName);
 }

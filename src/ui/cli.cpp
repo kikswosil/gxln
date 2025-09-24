@@ -1,13 +1,13 @@
 #include "cli.hpp"
 #include <iostream>
 
-void CLI::parseArgs(int argc, char* argv[], std::string* intputFileName, std::string* outputFileName) {
+void CLI::parseArgs(int argc, char* argv[], std::string& inputFileName, std::string& outputFileName) {
     for (int i = 1; i < argc; i++) {
         if(std::string(argv[i]) == "-i" && i + 1 < argc) {
-            *intputFileName = argv[i + 1];
+            inputFileName = argv[i + 1];
         } 
         else if(std::string(argv[i]) == "-o" && i + 1 < argc) {
-            *outputFileName = argv[i + 1];
+            outputFileName = argv[i + 1];
         }
     }
 }
@@ -52,6 +52,6 @@ void CLI::fileIsolator(const std::string& inputFileName, const std::string& outp
 void CLI::run(int argc, char* argv[]) {
     std::string inputFileName = "";
     std::string outputFileName = "";
-    this->parseArgs(argc, argv, &inputFileName, &outputFileName);
+    this->parseArgs(argc, argv, inputFileName, outputFileName);
     this->fileIsolator(inputFileName, outputFileName);
 }

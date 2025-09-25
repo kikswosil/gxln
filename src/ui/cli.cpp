@@ -13,11 +13,11 @@ void CLI::parseArgs(int argc, char* argv[], std::string& inputFileName, std::str
     }
 }
 
-std::string CLI::formatNumbers(const std::string &filename, gxln_conv::converter formatFunc) {
+std::string CLI::convertCoordinates(const std::string &filename, gxln_conv::converter formatFunc) {
     std::ifstream inputFile = FileHandler::openFile(filename);
     
     std::string result = "";
-    std::string line;
+    std::string line = "";
     while (std::getline(inputFile, line)) {
         result.append(formatFunc(line)).append("\n");
     }
@@ -30,5 +30,5 @@ void CLI::run(int argc, char* argv[]) {
 
     this->parseArgs(argc, argv, inputFileName, outputFileName);
 
-    FileHandler::saveFile(outputFileName, this->formatNumbers(inputFileName, gxln_conv::xlnToGcodeFormat));
+    FileHandler::saveFile(outputFileName, this->convertCoordinates(inputFileName, gxln_conv::xlnToGcodeFormat));
 }

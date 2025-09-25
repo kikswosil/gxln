@@ -1,5 +1,6 @@
 #include "cli.hpp"
 #include "../file/filehandler.hpp"
+#include "../gxln/utilities.hpp"
 #include <iostream>
 
 void CLI::parseArgs(int argc, char* argv[], std::string& inputFileName, std::string& outputFileName) {
@@ -13,24 +14,13 @@ void CLI::parseArgs(int argc, char* argv[], std::string& inputFileName, std::str
     }
 }
 
-std::string CLI::convertCoordinates(const std::string &filename, gxln_conv::converter formatFunc) {
-    std::ifstream inputFile = FileHandler::openFile(filename);
-    
-    std::string result = "";
-    std::string line = "";
-    while (std::getline(inputFile, line)) {
-        result.append(formatFunc(line)).append("\n");
-    }
-    return result;
-}
-
 void CLI::run(int argc, char* argv[]) {
     std::string inputFileName = "";
     std::string outputFileName = "";
 
     this->parseArgs(argc, argv, inputFileName, outputFileName);
 
-    std::string converted = this->convertCoordinates(inputFileName, gxln_conv::xlnToGcodeFormat);
+    std::string converted = gxln_util::convert(inputFileName, gxln_conv::xlnToGcodeFormat);
 
     FileHandler::saveFile(outputFileName, converted);
 }

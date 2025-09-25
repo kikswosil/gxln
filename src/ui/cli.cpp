@@ -30,5 +30,7 @@ void CLI::run(int argc, char* argv[]) {
 
     this->parseArgs(argc, argv, inputFileName, outputFileName);
 
-    FileHandler::saveFile(outputFileName, this->convertCoordinates(inputFileName, gxln_conv::xlnToGcodeFormat));
+    std::string converted = this->convertCoordinates(inputFileName, gxln_conv::xlnToGcodeFormat);
+
+    FileHandler::saveFile(outputFileName, converted);
 }

@@ -7,7 +7,6 @@
 class CLI : public UI {
     private: 
         void parseArgs(int argc, char *argv[], std::string &inputFileName, std::string &outputFileName);
-        std::string convertCoordinates(const std::string &inputFile, gxln_conv::converter formatFunc);
     public:
         void run(int argc, char *argv[]) override;
 };

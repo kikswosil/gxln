@@ -3,17 +3,6 @@
 #include "../gxln/utilities.hpp"
 #include <iostream>
 
-void CLI::parseArgs(int argc, char* argv[], std::string& inputFileName, std::string& outputFileName) {
-    for (int i = 1; i < argc; i++) {
-        if(std::string(argv[i]) == "-i" && i + 1 < argc) {
-            inputFileName = argv[i + 1];
-        } 
-        else if(std::string(argv[i]) == "-o" && i + 1 < argc) {
-            outputFileName = argv[i + 1];
-        }
-    }
-}
-
 void CLI::parseArgs(int argc, char *argv[], CLISettings &settings) {
     for(int i = 1; i < argc; i++) {
         if(std::string(argv[i]) == "-i" && i + 1 < argc) {
@@ -26,11 +15,8 @@ void CLI::parseArgs(int argc, char *argv[], CLISettings &settings) {
 }
 
 void CLI::run(int argc, char* argv[]) {
-    // std::string inputFileName = "";
-    // std::string outputFileName = "";
     CLISettings settings;
 
-    // this->parseArgs(argc, argv, inputFileName, outputFileName);
     this->parseArgs(argc, argv, settings);
 
     std::string converted = gxln_util::convert(settings.inputFile, gxln_conv::xlnToGcodeFormat);

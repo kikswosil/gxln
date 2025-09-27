@@ -26,12 +26,14 @@ void CLI::parseArgs(int argc, char *argv[], CLISettings &settings) {
 }
 
 void CLI::run(int argc, char* argv[]) {
-    std::string inputFileName = "";
-    std::string outputFileName = "";
+    // std::string inputFileName = "";
+    // std::string outputFileName = "";
+    CLISettings settings;
 
-    this->parseArgs(argc, argv, inputFileName, outputFileName);
+    // this->parseArgs(argc, argv, inputFileName, outputFileName);
+    this->parseArgs(argc, argv, settings);
 
-    std::string converted = gxln_util::convert(inputFileName, gxln_conv::xlnToGcodeFormat);
+    std::string converted = gxln_util::convert(settings.inputFile, gxln_conv::xlnToGcodeFormat);
 
-    FileHandler::saveFile(outputFileName, converted);
+    FileHandler::saveFile(settings.outputFile, converted);
 }

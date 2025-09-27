@@ -14,6 +14,17 @@ void CLI::parseArgs(int argc, char* argv[], std::string& inputFileName, std::str
     }
 }
 
+void CLI::parseArgs(int argc, char *argv[], CLISettings &settings) {
+    for(int i = 1; i < argc; i++) {
+        if(std::string(argv[i]) == "-i" && i + 1 < argc) {
+            settings.inputFile = argv[i + 1];
+        }
+        else if(std::string(argv[i]) == "-o" && i + 1 < argc) {
+            settings.outputFile = argv[i + 1];
+        }
+    }
+}
+
 void CLI::run(int argc, char* argv[]) {
     std::string inputFileName = "";
     std::string outputFileName = "";

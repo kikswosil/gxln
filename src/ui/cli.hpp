@@ -4,9 +4,16 @@
 #include <string>
 #include <fstream>
 
+struct CLISettings {
+    std::string inputFile;
+    std::string outputFile;
+};
+
+
 class CLI : public UI {
     private: 
         void parseArgs(int argc, char *argv[], std::string &inputFileName, std::string &outputFileName);
+        void parseArgs(int argc, char *argv[], CLISettings &settings);
     public:
         void run(int argc, char *argv[]) override;
 };

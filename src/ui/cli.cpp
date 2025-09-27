@@ -3,11 +3,6 @@
 #include "../gxln/utilities.hpp"
 #include <iostream>
 
-struct CLISettings {
-    std::string inputFile;
-    std::string outputFile;
-};
-
 void CLI::parseArgs(int argc, char* argv[], std::string& inputFileName, std::string& outputFileName) {
     for (int i = 1; i < argc; i++) {
         if(std::string(argv[i]) == "-i" && i + 1 < argc) {

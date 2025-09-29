@@ -8,6 +8,9 @@ void CLI::parseArgs(int argc, char *argv[], CLISettings &settings) {
       settings.inputFile = argv[i + 1];
     } else if (std::string(argv[i]) == "-o" && i + 1 < argc) {
       settings.outputFile = argv[i + 1];
+    } else if (std::string(argv[i]) == "-f" && i + 1 < argc) {
+      // TODO: add a way for the user to configure tool speeds
+      // default values should be 400 and 1000.
     }
   }
 }
